@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by ton on 07/11/14.
- */
+ * Jogo RPG
+ * **/
 public class Jogo {
 
     private static Jogo instance;
