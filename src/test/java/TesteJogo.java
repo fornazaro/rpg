@@ -13,5 +13,7 @@ public class TesteJogo {
 
         jogo.inicio();
 
+        //teste
+
     }
 }
