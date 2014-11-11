@@ -37,5 +37,9 @@ public class Jogo {
          * montar a interface inicial do jogo, inializar os objetos necessários
          */
 
+        System.out.println(" Monte sua equipe;");
+
+
+
     }
 }
