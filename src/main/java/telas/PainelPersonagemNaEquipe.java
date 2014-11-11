@@ -1,5 +1,6 @@
 package telas;
 
+import controle.Jogo;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Pos;
@@ -11,7 +12,7 @@ import javafx.scene.text.Font;
 import modelo.IPersonagem;
 
 
-public class PainelPersonagemDisponivel {
+public class PainelPersonagemNaEquipe {
 
     private VBox box = new VBox();
     private IPersonagem personagem;
@@ -21,11 +22,12 @@ public class PainelPersonagemDisponivel {
     private StringProperty descricao;
 
 
-    public PainelPersonagemDisponivel(IPersonagem personagem) {
+    public PainelPersonagemNaEquipe(IPersonagem personagem) {
         this.personagem = personagem;
 
         box.alignmentProperty().setValue(Pos.TOP_CENTER);
-        //box.setPrefSize(280, 280);
+
+
 
         nome = new SimpleStringProperty();
         descricao = new SimpleStringProperty();
@@ -47,6 +49,9 @@ public class PainelPersonagemDisponivel {
 
 
         TilePane pnl = new TilePane();
+        //#FFFAFA
+        //pnl.styleProperty().setValue("-fx-background-color: #8fbc8f;");
+        pnl.styleProperty().setValue("-fx-background-color: #FFFAFA;");
 
         pnl.getChildren().add(lblNome);
         pnl.getChildren().add(lblDescricao);
@@ -54,7 +59,12 @@ public class PainelPersonagemDisponivel {
         box.getChildren().add(pnl);
 
         btnAdicionar.setOnAction(action -> {
-            System.out.println(" Adicionou mais um jogador");
+
+
+            Jogo jogo = Jogo.getInstance();
+            jogo.addNovoPersonagemNaEquipe(personagem);
+
+
         });
 
     }

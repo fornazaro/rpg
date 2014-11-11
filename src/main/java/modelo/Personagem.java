@@ -4,9 +4,10 @@ package modelo;
 public class Personagem {
 
     protected String nome;
-    protected int quantidadeDeVida;
     protected int dano;
     protected int resistencia;
+    protected String urlImagem = null;
+    protected String descricao;
 
 
     public int getDano() {
@@ -25,5 +26,8 @@ public class Personagem {
 
     }
 
+    public String getDescricao() {
 
+        return descricao;
+    }
 }

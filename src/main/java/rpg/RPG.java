@@ -1,41 +1,41 @@
 package rpg;
 
+import controle.Jogo;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import modelo.IPersonagem;
 import telas.Inicial;
 import telas.PainelPersonagemDisponivel;
 
+import java.util.List;
+
 
 public class RPG extends Application {
+
+    //private String url = getClass().getResourceAsStream("mago.jpg").toString();
+
+
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        Jogo jogo = Jogo.getInstance();
+        jogo.inicio();
 
         AnchorPane anchorPane = new AnchorPane();
 
         Inicial inicial = new Inicial();
 
 
-        PainelPersonagemDisponivel p1 = new PainelPersonagemDisponivel();
+        List<IPersonagem> personagemList = jogo.getPersonagems();
 
-        p1.getScreen().setPrefSize(300,300);
+        personagemList.stream().forEach(tipoPersonagem -> {
+            PainelPersonagemDisponivel p = new PainelPersonagemDisponivel(tipoPersonagem);
 
-
-        inicial.addPersonagemDisponivel(p1);
-
-        PainelPersonagemDisponivel p2 = new PainelPersonagemDisponivel();
-
-        p1.getScreen().setPrefSize(300,300);
-        inicial.addPersonagemDisponivel(p2);
-
-        PainelPersonagemDisponivel p3 = new PainelPersonagemDisponivel();
-
-        p1.getScreen().setPrefSize(300,300);
-        inicial.addPersonagemDisponivel(p3);
-
+            inicial.addPersonagemDisponivel(p);
+        });
 
 
         VBox vBox = inicial.getScreen();

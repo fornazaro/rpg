@@ -1,6 +1,7 @@
 package telas;
 
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -17,7 +18,8 @@ public class Inicial {
         HBox boxMessage = new HBox();
         boxMessage.getChildren().add(new Label("Início, monte sua equipe, adicionando personagens de acordo com a lista abaixo"));
         box.getChildren().add(boxMessage);
-        boxDisponiveis.setPrefSize(780,580);
+        boxDisponiveis.setPrefSize(780, 580);
+
 
         box.getChildren().add(boxDisponiveis);
     }
@@ -30,7 +32,7 @@ public class Inicial {
 
 
     public void addPersonagemDisponivel(PainelPersonagemDisponivel personagemDisponivel) {
-        //    boxDisponiveis.getChildren().add( new Separator());
+        boxDisponiveis.getChildren().add(new Separator());
         boxDisponiveis.getChildren().add(personagemDisponivel.getScreen());
     }
 }
