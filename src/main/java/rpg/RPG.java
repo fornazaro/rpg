@@ -23,11 +23,12 @@ public class RPG extends Application {
 
         Jogo jogo = Jogo.getInstance();
         jogo.inicio();
+        jogo.setStage(primaryStage);
+
 
         AnchorPane anchorPane = new AnchorPane();
 
         Inicial inicial = new Inicial();
-
 
         List<IPersonagem> personagemList = jogo.getPersonagems();
 
