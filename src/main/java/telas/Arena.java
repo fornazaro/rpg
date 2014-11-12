@@ -183,7 +183,7 @@ public class Arena extends Application implements RPGEventListener {
         btnContinuar.setOnAction(action -> {
 
             jogo.getEventSource().addListener(jogo.getAtaque().getAlvo());
-            jogo.getEventSource().addListener(jogo.getAtaque().getAtacante());
+
 
             jogo.getEventSource().disparaExecucaoAtaque(jogo);
 
