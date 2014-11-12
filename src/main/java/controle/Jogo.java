@@ -1,5 +1,6 @@
 package controle;
 
+import eventos.RPGEventSource;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
@@ -27,6 +28,11 @@ public class Jogo {
     private List<IPersonagem> personagems = new ArrayList<IPersonagem>();
 
     private List<IPersonagem> equipeAdversaria = new ArrayList<IPersonagem>();
+
+    private Ataque ataque;
+
+    private RPGEventSource eventSource = new RPGEventSource();
+
 
     private Jogo() {
 
@@ -94,7 +100,13 @@ public class Jogo {
 
     }
 
-    public void atacar() {
+    public void iniciarAtaque(IPersonagem p) {
+        this.ataque = null;
+        this.ataque = new Ataque();
+        this.ataque.iniciarAtaque(p);
+
+        eventSource.disparaInicioAtaque(p);
+
 
     }
 
@@ -104,5 +116,21 @@ public class Jogo {
 
     public List<IPersonagem> getEquipeAdversaria() {
         return equipeAdversaria;
+    }
+
+    public void selecionarAlvoAtaque(IPersonagem alvo) {
+        this.ataque.selecionaAlvo(alvo);
+
+        eventSource.disparaSelecaoDeAlvo(alvo);
+
+    }
+
+    public RPGEventSource getEventSource() {
+
+        return eventSource;
+    }
+
+    public Ataque getAtaque() {
+        return ataque;
     }
 }

@@ -32,4 +32,6 @@ public class Bruxa extends Antagonista implements IPersonagem {
     public String getNome() {
         return this.nome;
     }
+
+
 }

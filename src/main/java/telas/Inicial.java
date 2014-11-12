@@ -53,6 +53,8 @@ public class Inicial {
             Arena arena = new Arena();
             try {
                 arena.start(jogo.getStage());
+
+                jogo.getEventSource().addListener(arena);
             } catch (Exception e) {
                 e.printStackTrace();
             }

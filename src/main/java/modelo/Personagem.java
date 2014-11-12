@@ -35,4 +35,13 @@ public class Personagem {
     public int getVida() {
         return vida;
     }
+
+    @Override
+    public String toString() {
+        return "Personagem{" +
+                "nome='" + nome + '\'' +
+                ", dano=" + dano +
+                ", vida=" + vida +
+                '}';
+    }
 }

@@ -1,8 +1,11 @@
 package telas;
 
 import controle.Jogo;
+import eventos.RPGEvent;
+import eventos.RPGEventListener;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -11,7 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
-public class Arena extends Application {
+public class Arena extends Application implements RPGEventListener {
 
     private Jogo jogo = Jogo.getInstance();
 
@@ -30,7 +33,6 @@ public class Arena extends Application {
     private StackPane getCenterNode() {
         StackPane pane = new StackPane();
 
-        pane.getChildren().add(new Label("ARENA, LUTAS AQUI!!!"));
         return pane;
     }
 
@@ -82,7 +84,7 @@ public class Arena extends Application {
         VBox boxAdversarios = getRightNode();
 
         jogo.getEquipeAdversaria().stream().forEach(personagem -> {
-            PainelPersonagemNaArena p = new PainelPersonagemNaArena(personagem);
+            PainelPersonagemAdversarioNaArena p = new PainelPersonagemAdversarioNaArena(personagem);
 
             p.getScreen().maxWidthProperty().setValue(100);
             p.getScreen().maxHeightProperty().setValue(100);
@@ -122,5 +124,64 @@ public class Arena extends Application {
         });
 
         pane.setLeft(box);
+    }
+
+    @Override
+    public void iniciaAtaqueListener(RPGEvent e) {
+
+        StackPane boxArena = getCenterNode();
+
+        boxArena.alignmentProperty().setValue(Pos.CENTER);
+
+        VBox box = new VBox();
+        box.alignmentProperty().setValue(Pos.CENTER);
+
+        PainelPersonagemNaEquipe p = new PainelPersonagemNaEquipe((modelo.IPersonagem) e.getSource());
+
+        p.getScreen().setPrefSize(200, 200);
+        p.getScreen().setMaxSize(200, 200);
+
+        box.getChildren().add(p.getScreen());
+        box.getChildren().add(new Label("ATACA!!!"));
+
+
+        boxArena.getChildren().add(box);
+
+        pane.setCenter(boxArena);
+
+    }
+
+    @Override
+    public void selecionarAlvo(RPGEvent event) {
+
+        StackPane boxArena = getCenterNode();
+
+        boxArena.alignmentProperty().setValue(Pos.TOP_CENTER);
+
+        VBox box = new VBox();
+        box.alignmentProperty().setValue(Pos.TOP_CENTER);
+
+
+        PainelPersonagemNaEquipe pAtacante = new PainelPersonagemNaEquipe(jogo.getAtaque().getAtacante());
+
+        pAtacante.getScreen().setPrefSize(200, 200);
+        pAtacante.getScreen().setMaxSize(200, 200);
+
+        box.getChildren().add(pAtacante.getScreen());
+        box.getChildren().add(new Label("ATACA!!!"));
+
+
+        PainelPersonagemNaEquipe pAlvo = new PainelPersonagemNaEquipe((modelo.IPersonagem) event.getSource());
+
+        pAlvo.getScreen().setPrefSize(200, 200);
+        pAlvo.getScreen().setMaxSize(200, 200);
+
+        box.getChildren().add(pAlvo.getScreen());
+
+
+        boxArena.getChildren().add(box);
+
+        pane.setCenter(boxArena);
+
     }
 }

@@ -15,16 +15,17 @@ import modelo.Protagonista;
 
 public class PainelPersonagemNaArena {
 
-    private Jogo jogo = Jogo.getInstance();
+    protected Jogo jogo = Jogo.getInstance();
 
-    private final IPersonagem personagem;
-    private VBox box = new VBox();
+    protected final IPersonagem personagem;
+    protected VBox box = new VBox();
+    protected TilePane pnl = new TilePane();
 
 
-    private StringProperty nome;
-    private StringProperty vida;
+    protected StringProperty nome;
+    protected StringProperty vida;
 
-    public PainelPersonagemNaArena(IPersonagem personagem) {
+    protected PainelPersonagemNaArena(IPersonagem personagem) {
         this.personagem = personagem;
 
         box.alignmentProperty().setValue(Pos.TOP_CENTER);
@@ -34,7 +35,7 @@ public class PainelPersonagemNaArena {
         vida = new SimpleStringProperty();
 
         nome.setValue(personagem.getNome());
-        vida.setValue("Vida: " + personagem.getVida() );
+        vida.setValue("Vida: " + personagem.getVida());
 
         Label lblNome = new Label();
         lblNome.fontProperty().set(Font.font("Verdana", 10));
@@ -46,21 +47,19 @@ public class PainelPersonagemNaArena {
         lblVida.fontProperty().set(Font.font("Verdana", 8));
 
 
-        TilePane pnl = new TilePane();
-
         pnl.styleProperty().setValue("-fx-background-color: #FFFAFA;");
 
         pnl.getChildren().add(lblNome);
         pnl.getChildren().add(lblVida);
 
         Button btnAtacar = new Button("Atacar");
-        btnAtacar.fontProperty().set(Font.font("Verdana", 10));
+        btnAtacar.fontProperty().set(Font.font("Verdana", 8));
         pnl.getChildren().add(btnAtacar);
 
         box.getChildren().add(pnl);
 
         btnAtacar.setOnAction(action -> {
-            jogo.atacar();
+            jogo.iniciarAtaque(personagem);
 
         });
 
@@ -68,7 +67,7 @@ public class PainelPersonagemNaArena {
 
         if (personagem instanceof Protagonista) {
             btnCurar = new Button("Curar");
-            btnCurar.fontProperty().set(Font.font("Verdana", 10));
+            btnCurar.fontProperty().set(Font.font("Verdana", 8));
             btnCurar.setOnAction(action -> {
                 jogo.curar();
 
@@ -76,6 +75,7 @@ public class PainelPersonagemNaArena {
 
             pnl.getChildren().add(btnCurar);
         }
+
 
     }
 
