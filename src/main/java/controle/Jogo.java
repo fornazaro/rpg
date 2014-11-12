@@ -90,12 +90,62 @@ public class Jogo {
     public void buildEquipeAdversaria() {
         List<IPersonagem> listaOrigem = this.equipeJogador;
 
+
         this.equipeAdversaria = null;
 
         this.equipeAdversaria = new ArrayList<>();
 
         listaOrigem.forEach(obj -> {
-            this.equipeAdversaria.add(obj);
+
+            if (obj instanceof Bruxa) {
+                Bruxa bruxa = (Bruxa) obj;
+
+                try {
+                    Bruxa nova = bruxa.clone();
+                    this.equipeAdversaria.add(nova);
+
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+
+            } else if (obj instanceof Cavaleiro) {
+                Cavaleiro cavaleiro = (Cavaleiro) obj;
+
+                try {
+                    Cavaleiro nova = cavaleiro.clone();
+                    this.equipeAdversaria.add(nova);
+
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+
+            } else if (obj instanceof Guerreiro) {
+
+                Guerreiro guerreiro = (Guerreiro) obj;
+
+                try {
+                    Guerreiro nova = guerreiro.clone();
+                    this.equipeAdversaria.add(nova);
+
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+
+            } else if (obj instanceof Mago) {
+
+                Mago mago = (Mago) obj;
+
+                try {
+                    Mago nova = mago.clone();
+                    this.equipeAdversaria.add(nova);
+
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+
         });
 
     }
@@ -133,8 +183,6 @@ public class Jogo {
     public Ataque getAtaque() {
         return ataque;
     }
-
-
 
 
 }

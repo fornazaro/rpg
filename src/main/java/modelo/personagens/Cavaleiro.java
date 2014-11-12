@@ -10,14 +10,12 @@ import modelo.Protagonista;
  */
 public class Cavaleiro extends Protagonista implements IPersonagem {
 
-    
-
 
     public Cavaleiro() {
-      //  urlImagem = this.getClass().getResourceAsStream("cavaleiro.jpg").toString();
+        //  urlImagem = this.getClass().getResourceAsStream("cavaleiro.jpg").toString();
         this.dano = 10;
         this.resistencia = 5;
-        this.nome ="CAVALEIRO";
+        this.nome = "CAVALEIRO";
         this.descricao = " Protagonista, \ncausa dano de : " + this.dano + " \n e tem resistência de : " + this.resistencia;
     }
 
@@ -76,6 +74,20 @@ public class Cavaleiro extends Protagonista implements IPersonagem {
         this.vida = saldo;
 
 
+    }
+
+    @Override
+    public Cavaleiro clone() throws CloneNotSupportedException {
+
+        Cavaleiro nova = new Cavaleiro();
+
+        nova.vida = this.vida;
+        nova.dano = this.dano;
+        nova.nome = this.nome;
+        nova.resistencia = this.resistencia;
+        nova.descricao = this.descricao;
+
+        return nova;
     }
 
 

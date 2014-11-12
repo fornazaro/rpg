@@ -3,7 +3,7 @@ package modelo;
 
 import eventos.RPGEventListener;
 
-public interface IPersonagem extends RPGEventListener {
+public interface IPersonagem extends RPGEventListener,Cloneable {
 
     public String getUrlImagem();
 
@@ -14,6 +14,8 @@ public interface IPersonagem extends RPGEventListener {
     public int getVida();
 
     public int getDano();
+
+
 
 
 }

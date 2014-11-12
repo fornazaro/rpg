@@ -14,6 +14,7 @@ public class Bruxa extends Antagonista implements IPersonagem {
         this.descricao = " Antagonista,\n causa dano de : " + this.dano + " \n e tem resistência de : " + this.resistencia;
     }
 
+
     @Override
     public int getDano() {
         return this.dano;
@@ -70,4 +71,20 @@ public class Bruxa extends Antagonista implements IPersonagem {
 
 
     }
+
+    @Override
+    public Bruxa clone() throws CloneNotSupportedException {
+
+        Bruxa nova = new Bruxa();
+
+        nova.vida = this.vida;
+        nova.dano = this.dano;
+        nova.nome = this.nome;
+        nova.resistencia = this.resistencia;
+        nova.descricao = this.descricao;
+
+        return nova;
+    }
+
+
 }

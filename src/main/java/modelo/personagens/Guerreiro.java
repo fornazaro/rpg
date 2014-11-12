@@ -72,5 +72,19 @@ public class Guerreiro extends Antagonista implements IPersonagem {
 
     }
 
+    @Override
+    public Guerreiro clone() throws CloneNotSupportedException {
+
+        Guerreiro nova = new Guerreiro();
+
+        nova.vida = this.vida;
+        nova.dano = this.dano;
+        nova.nome = this.nome;
+        nova.resistencia = this.resistencia;
+        nova.descricao = this.descricao;
+
+        return nova;
+    }
+
 
 }

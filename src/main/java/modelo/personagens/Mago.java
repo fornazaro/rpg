@@ -76,5 +76,19 @@ public class Mago extends Protagonista implements IPersonagem {
 
     }
 
+    @Override
+    public Mago clone() throws CloneNotSupportedException {
+
+        Mago nova = new Mago();
+
+        nova.vida = this.vida;
+        nova.dano = this.dano;
+        nova.nome = this.nome;
+        nova.resistencia = this.resistencia;
+        nova.descricao = this.descricao;
+
+        return nova;
+    }
+
 
 }
