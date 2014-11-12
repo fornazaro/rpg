@@ -20,16 +20,13 @@ public class Jogo {
 
     private static Jogo instance;
 
-    private Stage stage ;
+    private Stage stage;
 
     private ObservableList<IPersonagem> equipeJogador = FXCollections.observableArrayList();
 
     private List<IPersonagem> personagems = new ArrayList<IPersonagem>();
 
-
-    // private List<IPersonagem> equipeJogador = new ArrayList<IPersonagem>();
-
-    private List<IPersonagem> equipeMaquina = new ArrayList<IPersonagem>();
+    private List<IPersonagem> equipeAdversaria = new ArrayList<IPersonagem>();
 
     private Jogo() {
 
@@ -82,5 +79,30 @@ public class Jogo {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    public void buildEquipeAdversaria() {
+        List<IPersonagem> listaOrigem = this.equipeJogador;
+
+        this.equipeAdversaria = null;
+
+        this.equipeAdversaria = new ArrayList<>();
+
+        listaOrigem.forEach(obj -> {
+            this.equipeAdversaria.add(obj);
+        });
+
+    }
+
+    public void atacar() {
+
+    }
+
+    public void curar() {
+
+    }
+
+    public List<IPersonagem> getEquipeAdversaria() {
+        return equipeAdversaria;
     }
 }
