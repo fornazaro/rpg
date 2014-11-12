@@ -2,6 +2,7 @@ package telas;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.TilePane;
@@ -23,6 +24,7 @@ public class PainelPersonagemNaEquipe {
         this.personagem = personagem;
 
         box.alignmentProperty().setValue(Pos.TOP_CENTER);
+        box.paddingProperty().setValue( new Insets(10));
 
 
         nome = new SimpleStringProperty();

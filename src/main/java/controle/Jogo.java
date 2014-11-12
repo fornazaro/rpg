@@ -133,4 +133,8 @@ public class Jogo {
     public Ataque getAtaque() {
         return ataque;
     }
+
+
+
+
 }

@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -178,10 +179,39 @@ public class Arena extends Application implements RPGEventListener {
 
         box.getChildren().add(pAlvo.getScreen());
 
+        Button btnContinuar = new Button("Continua");
+        btnContinuar.setOnAction(action -> {
+
+            jogo.getEventSource().addListener(jogo.getAtaque().getAlvo());
+            jogo.getEventSource().addListener(jogo.getAtaque().getAtacante());
+
+            jogo.getEventSource().disparaExecucaoAtaque(jogo);
+
+        });
+
+        box.getChildren().add(btnContinuar);
 
         boxArena.getChildren().add(box);
 
         pane.setCenter(boxArena);
 
     }
+
+    @Override
+    public void executaAtaque(RPGEvent event) {
+
+        jogo.getEventSource().disparaSofrimentoAtaque(jogo.getAtaque().getAtacante());
+
+        exibePersonagensEquipeJogador();
+        exibePersonagensEquipeAdversaria();
+
+
+    }
+
+    @Override
+    public void sofreAtaque(RPGEvent event) {
+
+    }
+
+
 }

@@ -1,5 +1,7 @@
 package modelo.personagens;
 
+import eventos.RPGEvent;
+import modelo.Antagonista;
 import modelo.IPersonagem;
 import modelo.Protagonista;
 
@@ -37,6 +39,43 @@ public class Cavaleiro extends Protagonista implements IPersonagem {
     @Override
     public String getNome() {
         return this.nome;
+    }
+
+
+    @Override
+    public void iniciaAtaqueListener(RPGEvent e) {
+
+    }
+
+    @Override
+    public void selecionarAlvo(RPGEvent event) {
+
+    }
+
+    @Override
+    public void executaAtaque(RPGEvent event) {
+
+    }
+
+    @Override
+    public void sofreAtaque(RPGEvent event) {
+
+        IPersonagem atacante = (IPersonagem) event.getSource();
+        /**descontar o dano do ataque da vida do personagem,  e depois acrescentando a resistência, caso o atacante seja antagonista, seu poder de ataque é dobrado**/
+
+
+        int saldo = 0;
+
+        if (atacante instanceof Antagonista) {
+            saldo = (this.vida - (atacante.getDano() * 2)) + this.resistencia;
+        } else {
+            saldo = (this.vida - atacante.getDano()) + this.resistencia;
+        }
+
+
+        this.vida = saldo;
+
+
     }
 
 

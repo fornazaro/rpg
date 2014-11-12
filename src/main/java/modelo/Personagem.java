@@ -8,7 +8,7 @@ public class Personagem {
     protected int resistencia;
     protected String urlImagem = null;
     protected String descricao;
-    protected  int vida = 100;
+    protected int vida = 100;
 
 
     public int getDano() {
@@ -44,4 +44,6 @@ public class Personagem {
                 ", vida=" + vida +
                 '}';
     }
+
+
 }

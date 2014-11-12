@@ -1,7 +1,9 @@
 package modelo;
 
 
-public interface IPersonagem {
+import eventos.RPGEventListener;
+
+public interface IPersonagem extends RPGEventListener {
 
     public String getUrlImagem();
 
@@ -9,5 +11,9 @@ public interface IPersonagem {
 
     public String getDescricao();
 
-    public int getVida() ;
+    public int getVida();
+
+    public int getDano();
+
+
 }
