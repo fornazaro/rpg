@@ -11,7 +11,7 @@ public class Personagem {
     protected int resistencia;
     protected String urlImagem = null;
     protected String descricao;
-    protected int vida = 50;
+    protected int vida = 40;
 
     protected SimpleObjectProperty<StatusPersonagem> statusPersonagemProperty;
 

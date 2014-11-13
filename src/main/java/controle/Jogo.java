@@ -13,6 +13,7 @@ import modelo.personagens.Mago;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Jogo RPG
@@ -90,7 +91,6 @@ public class Jogo {
 
     public void buildEquipeAdversaria() {
         List<IPersonagem> listaOrigem = this.equipeJogador;
-
 
         this.equipeAdversaria = null;
 
@@ -192,21 +192,36 @@ public class Jogo {
      */
     public void selecionarAtacanteParaContraAtaque() {
 
-        this.equipeAdversaria.forEach(p -> {
-            if (p.statusPersonagemProperty().equals(StatusPersonagem.VIVO)) {
-                iniciarAtaque(p);
-                return;
+
+        this.equipeAdversaria.stream().forEach(new Consumer<IPersonagem>() {
+            @Override
+            public void accept(IPersonagem personagem) {
+                if (personagem.statusPersonagemProperty().getValue().equals(StatusPersonagem.VIVO)) {
+                    iniciarAtaque(personagem);
+                    return;
+                }
             }
         });
 
+
     }
 
+    /**
+     * Deve ser implementada uma regra, de acordo com a descrição do trabalho para seleção do alvo
+     * do contra-ataque por parte do sistema.
+     */
     public void selecionaAlvoContraAtaque() {
-        this.equipeJogador.forEach(p -> {
-            ataque.selecionaAlvo(p);
-            return;
 
+        this.equipeJogador.stream().forEach(new Consumer<IPersonagem>() {
+            @Override
+            public void accept(IPersonagem personagem) {
+                if (personagem.statusPersonagemProperty().getValue().equals(StatusPersonagem.VIVO)) {
+                    ataque.selecionaAlvo(personagem);
+                    return;
+                }
+            }
         });
+
 
     }
 }

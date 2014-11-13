@@ -1,5 +1,7 @@
 package eventos;
 
+import modelo.IPersonagem;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -45,6 +47,14 @@ public class RPGEventSource {
         }
     }
 
+    public void disparaSelecaoDeAlvoContaAtaque(Object source) {
+        RPGEvent event = new RPGEvent(source);
+        for (RPGEventListener listener : cloneListeners()) {
+            listener.selecionarAlvoContraAtaque(event);
+        }
+
+    }
+
 
     public synchronized void addListener(RPGEventListener listener) {
         if (!eventListeners.contains(listener)) {
@@ -69,6 +79,7 @@ public class RPGEventSource {
             return (Collection<RPGEventListener>) (((ArrayList<RPGEventListener>) eventListeners).clone());
         }
     }
+
 
 
 }

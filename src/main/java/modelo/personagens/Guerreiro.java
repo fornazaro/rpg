@@ -1,6 +1,7 @@
 package modelo.personagens;
 
 import eventos.RPGEvent;
+import javafx.beans.property.SimpleObjectProperty;
 import modelo.Antagonista;
 import modelo.IPersonagem;
 import modelo.StatusPersonagem;
@@ -52,6 +53,10 @@ public class Guerreiro extends Antagonista implements IPersonagem {
 
     }
 
+    @Override
+    public void selecionarAlvoContraAtaque(RPGEvent event) {
+
+    }
 
 
     @Override
@@ -64,6 +69,20 @@ public class Guerreiro extends Antagonista implements IPersonagem {
         nova.nome = this.nome;
         nova.resistencia = this.resistencia;
         nova.descricao = this.descricao;
+
+
+        if (this.statusPersonagemProperty().get().equals(StatusPersonagem.VIVO)) {
+            nova.statusPersonagemProperty = new SimpleObjectProperty<>(StatusPersonagem.VIVO);
+        } else if (this.statusPersonagemProperty().get().equals(StatusPersonagem.MORTO)) {
+            nova.statusPersonagemProperty = new SimpleObjectProperty<>(StatusPersonagem.MORTO);
+        } else if (this.statusPersonagemProperty().get().equals(StatusPersonagem.ATACANDO)) {
+            nova.statusPersonagemProperty = new SimpleObjectProperty<>(StatusPersonagem.ATACANDO);
+        } else if (this.statusPersonagemProperty().get().equals(StatusPersonagem.SELECIONADO)) {
+            nova.statusPersonagemProperty = new SimpleObjectProperty<>(StatusPersonagem.SELECIONADO);
+        } else if (this.statusPersonagemProperty().get().equals(StatusPersonagem.SENDO_ATACADO)) {
+            nova.statusPersonagemProperty = new SimpleObjectProperty<>(StatusPersonagem.SENDO_ATACADO);
+        }
+
 
         return nova;
     }

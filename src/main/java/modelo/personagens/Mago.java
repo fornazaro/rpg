@@ -2,8 +2,10 @@ package modelo.personagens;
 
 
 import eventos.RPGEvent;
+import javafx.beans.property.SimpleObjectProperty;
 import modelo.IPersonagem;
 import modelo.Protagonista;
+import modelo.StatusPersonagem;
 
 
 public class Mago extends Protagonista implements IPersonagem {
@@ -55,6 +57,11 @@ public class Mago extends Protagonista implements IPersonagem {
 
     }
 
+    @Override
+    public void selecionarAlvoContraAtaque(RPGEvent event) {
+
+    }
+
 
     @Override
     public Mago clone() throws CloneNotSupportedException {
@@ -66,6 +73,19 @@ public class Mago extends Protagonista implements IPersonagem {
         nova.nome = this.nome;
         nova.resistencia = this.resistencia;
         nova.descricao = this.descricao;
+
+        if (this.statusPersonagemProperty().get().equals(StatusPersonagem.VIVO)) {
+            nova.statusPersonagemProperty = new SimpleObjectProperty<>(StatusPersonagem.VIVO);
+        } else if (this.statusPersonagemProperty().get().equals(StatusPersonagem.MORTO)) {
+            nova.statusPersonagemProperty = new SimpleObjectProperty<>(StatusPersonagem.MORTO);
+        } else if (this.statusPersonagemProperty().get().equals(StatusPersonagem.ATACANDO)) {
+            nova.statusPersonagemProperty = new SimpleObjectProperty<>(StatusPersonagem.ATACANDO);
+        } else if (this.statusPersonagemProperty().get().equals(StatusPersonagem.SELECIONADO)) {
+            nova.statusPersonagemProperty = new SimpleObjectProperty<>(StatusPersonagem.SELECIONADO);
+        } else if (this.statusPersonagemProperty().get().equals(StatusPersonagem.SENDO_ATACADO)) {
+            nova.statusPersonagemProperty = new SimpleObjectProperty<>(StatusPersonagem.SENDO_ATACADO);
+        }
+
 
         return nova;
     }

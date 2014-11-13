@@ -163,6 +163,7 @@ public class Arena extends Application implements RPGEventListener {
 
         VBox box = new VBox();
         box.alignmentProperty().setValue(Pos.TOP_CENTER);
+        box.getChildren().add(new Label("EQUIPE HUMANA ATACA!!!"));
 
 
         PainelPersonagemNaEquipe pAtacante = new PainelPersonagemNaEquipe(jogo.getAtaque().getAtacante());
@@ -171,7 +172,8 @@ public class Arena extends Application implements RPGEventListener {
         pAtacante.getScreen().setMaxSize(200, 200);
 
         box.getChildren().add(pAtacante.getScreen());
-        box.getChildren().add(new Label("ATACA!!!"));
+
+        box.getChildren().add(new Label(jogo.getAtaque().getAtacante().getNome() + " X " + jogo.getAtaque().getAlvo().getNome()));
 
 
         PainelPersonagemNaEquipe pAlvo = new PainelPersonagemNaEquipe((modelo.IPersonagem) event.getSource());
@@ -257,7 +259,55 @@ public class Arena extends Application implements RPGEventListener {
         jogo.selecionarAtacanteParaContraAtaque();
         jogo.iniciarAtaque(jogo.getAtaque().getAtacante());
         jogo.selecionaAlvoContraAtaque();
-        jogo.getEventSource().disparaSelecaoDeAlvo(jogo.getAtaque().getAlvo());
+        jogo.getEventSource().disparaSelecaoDeAlvoContaAtaque(jogo.getAtaque().getAlvo());
+
+    }
+
+    @Override
+    public void selecionarAlvoContraAtaque(RPGEvent event) {
+
+        System.out.println(" executando a seleção e, exibição de alvos para Contra-ataque");
+
+        StackPane boxArena = getCenterNode();
+
+        boxArena.alignmentProperty().setValue(Pos.TOP_CENTER);
+
+        VBox box = new VBox();
+        box.alignmentProperty().setValue(Pos.TOP_CENTER);
+        box.getChildren().add(new Label("EQUIPE MÁQUINA ATACA!!!"));
+
+
+        PainelPersonagemNaEquipe pAtacante = new PainelPersonagemNaEquipe(jogo.getAtaque().getAtacante());
+
+        pAtacante.getScreen().setPrefSize(200, 200);
+        pAtacante.getScreen().setMaxSize(200, 200);
+
+        box.getChildren().add(pAtacante.getScreen());
+        box.getChildren().add(new Label(jogo.getAtaque().getAtacante().getNome() + " X " + jogo.getAtaque().getAlvo().getNome()));
+
+
+        PainelPersonagemNaEquipe pAlvo = new PainelPersonagemNaEquipe((modelo.IPersonagem) event.getSource());
+
+        pAlvo.getScreen().setPrefSize(200, 200);
+        pAlvo.getScreen().setMaxSize(200, 200);
+
+        box.getChildren().add(pAlvo.getScreen());
+
+        Button btnContinuar = new Button("Continua");
+        btnContinuar.setOnAction(action -> {
+
+            jogo.getEventSource().addListener(jogo.getAtaque().getAlvo());
+
+
+            jogo.getEventSource().disparaExecucaoAtaque(jogo);
+
+        });
+
+        box.getChildren().add(btnContinuar);
+
+        boxArena.getChildren().add(box);
+
+        pane.setCenter(boxArena);
 
     }
 

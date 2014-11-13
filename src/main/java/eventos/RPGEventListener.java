@@ -14,4 +14,5 @@ public interface RPGEventListener extends EventListener  {
     void sofreAtaque(RPGEvent event) ;
 
 
+    void selecionarAlvoContraAtaque(RPGEvent event);
 }
