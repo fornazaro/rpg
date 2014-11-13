@@ -2,8 +2,9 @@ package modelo;
 
 
 import eventos.RPGEventListener;
+import javafx.beans.property.SimpleObjectProperty;
 
-public interface IPersonagem extends RPGEventListener,Cloneable {
+public interface IPersonagem extends RPGEventListener, Cloneable {
 
     public String getUrlImagem();
 
@@ -15,7 +16,7 @@ public interface IPersonagem extends RPGEventListener,Cloneable {
 
     public int getDano();
 
-
+    public SimpleObjectProperty<StatusPersonagem> statusPersonagemProperty();
 
 
 }

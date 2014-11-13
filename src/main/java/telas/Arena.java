@@ -4,6 +4,7 @@ import controle.Jogo;
 import eventos.RPGEvent;
 import eventos.RPGEventListener;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -154,6 +155,7 @@ public class Arena extends Application implements RPGEventListener {
 
     @Override
     public void selecionarAlvo(RPGEvent event) {
+        System.out.println(" executando a seleção e, exibição de alvos");
 
         StackPane boxArena = getCenterNode();
 
@@ -205,11 +207,57 @@ public class Arena extends Application implements RPGEventListener {
         exibePersonagensEquipeJogador();
         exibePersonagensEquipeAdversaria();
 
+        jogo.getEventSource().removeListener(jogo.getAtaque().getAlvo());
+
 
     }
 
     @Override
     public void sofreAtaque(RPGEvent event) {
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                exibePersonagensEquipeAdversaria();
+                exibePersonagensEquipeJogador();
+            }
+        });
+
+
+        /**
+         * iniciando contra-ataque, ou seja após sofrer um ataque, o sistema deve revidar, ou seja disparar um outro ataque
+         * É preciso, selecionar um personagem da lista de personagens da equipe da máquina, e depois selecionar uma ação(atacar ou curar )
+         * e depois selecionar um alvo, que deve ser da equipe do jogardor humano. e então disparar um ataque.
+         */
+        StackPane boxArena = getCenterNode();
+
+        boxArena.alignmentProperty().setValue(Pos.TOP_CENTER);
+
+        VBox box = new VBox();
+        box.alignmentProperty().setValue(Pos.CENTER);
+
+        Label lblMsg = new Label();
+
+        box.getChildren().add(lblMsg);
+
+
+        boxArena.getChildren().add(box);
+
+        pane.setCenter(boxArena);
+
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        lblMsg.textProperty().setValue("Processando contra - ataque!!!");
+
+        jogo.selecionarAtacanteParaContraAtaque();
+        jogo.iniciarAtaque(jogo.getAtaque().getAtacante());
+        jogo.selecionaAlvoContraAtaque();
+        jogo.getEventSource().disparaSelecaoDeAlvo(jogo.getAtaque().getAlvo());
 
     }
 

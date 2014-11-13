@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import modelo.IPersonagem;
 import modelo.Protagonista;
+import modelo.StatusPersonagem;
 
 
 public class PainelPersonagemNaArena {
@@ -47,8 +48,6 @@ public class PainelPersonagemNaArena {
         lblVida.fontProperty().set(Font.font("Verdana", 8));
 
 
-        pnl.styleProperty().setValue("-fx-background-color: #FFFAFA;");
-
         pnl.getChildren().add(lblNome);
         pnl.getChildren().add(lblVida);
 
@@ -63,10 +62,9 @@ public class PainelPersonagemNaArena {
 
         });
 
-        Button btnCurar;
+        Button btnCurar = new Button("Curar");
 
         if (personagem instanceof Protagonista) {
-            btnCurar = new Button("Curar");
             btnCurar.fontProperty().set(Font.font("Verdana", 8));
             btnCurar.setOnAction(action -> {
                 jogo.curar();
@@ -74,6 +72,19 @@ public class PainelPersonagemNaArena {
             });
 
             pnl.getChildren().add(btnCurar);
+        }
+
+        if (personagem.statusPersonagemProperty().get().equals(StatusPersonagem.VIVO)) {
+            pnl.styleProperty().setValue("-fx-background-color: #FFFAFA;");
+        } else if (personagem.statusPersonagemProperty().get().equals(StatusPersonagem.MORTO)) {
+
+            pnl.styleProperty().setValue("-fx-background-color: #FF0000;");
+            pnl.getChildren().remove(btnAtacar);
+            if (pnl.getChildren().contains(btnCurar)) {
+                pnl.getChildren().remove(btnCurar);
+            }
+
+            pnl.getChildren().remove(lblVida);
         }
 
 

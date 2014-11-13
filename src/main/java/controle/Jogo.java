@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import modelo.IPersonagem;
+import modelo.StatusPersonagem;
 import modelo.personagens.Bruxa;
 import modelo.personagens.Cavaleiro;
 import modelo.personagens.Guerreiro;
@@ -185,4 +186,27 @@ public class Jogo {
     }
 
 
+    /**
+     * Pode ser implementado um algorítmo que leve N fatores em consideração para o momento de escolher qual personagem
+     * vai disparar o contra-ataque, no momento o único critério adotado é que o personagem esteja vivo.
+     */
+    public void selecionarAtacanteParaContraAtaque() {
+
+        this.equipeAdversaria.forEach(p -> {
+            if (p.statusPersonagemProperty().equals(StatusPersonagem.VIVO)) {
+                iniciarAtaque(p);
+                return;
+            }
+        });
+
+    }
+
+    public void selecionaAlvoContraAtaque() {
+        this.equipeJogador.forEach(p -> {
+            ataque.selecionaAlvo(p);
+            return;
+
+        });
+
+    }
 }

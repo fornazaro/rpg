@@ -3,6 +3,7 @@ package telas;
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 import modelo.IPersonagem;
+import modelo.StatusPersonagem;
 
 
 public class PainelPersonagemAdversarioNaArena extends PainelPersonagemNaArena {
@@ -11,18 +12,18 @@ public class PainelPersonagemAdversarioNaArena extends PainelPersonagemNaArena {
     public PainelPersonagemAdversarioNaArena(IPersonagem personagem) {
         super(personagem);
 
-        Button btnSelecionarAlvo = new Button("Selecionar");
-        btnSelecionarAlvo.fontProperty().set(Font.font("Verdana", 8));
+        if (personagem.statusPersonagemProperty().get().equals(StatusPersonagem.VIVO)) {
 
+            Button btnSelecionarAlvo = new Button("Selecionar");
+            btnSelecionarAlvo.fontProperty().set(Font.font("Verdana", 8));
 
-        btnSelecionarAlvo.setOnAction(action -> {
-            jogo.selecionarAlvoAtaque(personagem);
-        });
+            btnSelecionarAlvo.setOnAction(action -> {
+                jogo.selecionarAlvoAtaque(personagem);
+            });
 
+            pnl.getChildren().add(btnSelecionarAlvo);
 
-        pnl.getChildren().add(btnSelecionarAlvo);
-
-
+        }
     }
 
 

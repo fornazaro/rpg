@@ -4,6 +4,7 @@ import eventos.RPGEvent;
 import modelo.Antagonista;
 import modelo.IPersonagem;
 import modelo.Protagonista;
+import modelo.StatusPersonagem;
 
 /**
  * Created by ton on 07/11/14.
@@ -55,26 +56,7 @@ public class Cavaleiro extends Protagonista implements IPersonagem {
 
     }
 
-    @Override
-    public void sofreAtaque(RPGEvent event) {
 
-        IPersonagem atacante = (IPersonagem) event.getSource();
-        /**descontar o dano do ataque da vida do personagem,  e depois acrescentando a resistência, caso o atacante seja antagonista, seu poder de ataque é dobrado**/
-
-
-        int saldo = 0;
-
-        if (atacante instanceof Antagonista) {
-            saldo = (this.vida - (atacante.getDano() * 2)) + this.resistencia;
-        } else {
-            saldo = (this.vida - atacante.getDano()) + this.resistencia;
-        }
-
-
-        this.vida = saldo;
-
-
-    }
 
     @Override
     public Cavaleiro clone() throws CloneNotSupportedException {
