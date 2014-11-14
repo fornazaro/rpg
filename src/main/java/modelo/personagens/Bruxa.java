@@ -58,6 +58,11 @@ public class Bruxa extends Antagonista implements IPersonagem {
 
     }
 
+    @Override
+    public void atualizaSituacaoJogo(RPGEvent event) {
+
+    }
+
 
     @Override
     public Bruxa clone() throws CloneNotSupportedException {
@@ -87,5 +92,15 @@ public class Bruxa extends Antagonista implements IPersonagem {
         return nova;
     }
 
+    @Override
+    public void sofreAtaque(RPGEvent event) {
+        super.sofreAtaque(event);
+        this.jogo.getEventSource().removeListener(this);
+    }
+
+
 
 }
+
+
+

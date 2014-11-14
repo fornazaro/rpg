@@ -1,6 +1,7 @@
 package eventos;
 
 import modelo.IPersonagem;
+import modelo.Personagem;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,6 +52,15 @@ public class RPGEventSource {
         RPGEvent event = new RPGEvent(source);
         for (RPGEventListener listener : cloneListeners()) {
             listener.selecionarAlvoContraAtaque(event);
+        }
+
+    }
+
+    public void disparaAtualizaSituacaoJogo(Object source) {
+
+        RPGEvent event = new RPGEvent(source);
+        for (RPGEventListener listener : cloneListeners()) {
+            listener.atualizaSituacaoJogo(event);
         }
 
     }

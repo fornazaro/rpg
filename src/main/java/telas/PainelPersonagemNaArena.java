@@ -3,6 +3,7 @@ package telas;
 import controle.Jogo;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -26,16 +27,21 @@ public class PainelPersonagemNaArena {
     protected StringProperty nome;
     protected StringProperty vida;
 
+    protected Button btnAtacar = new Button("Atacar");
+    protected Button btnCurar = new Button("Curar");
+
     protected PainelPersonagemNaArena(IPersonagem personagem) {
         this.personagem = personagem;
 
         box.alignmentProperty().setValue(Pos.TOP_CENTER);
+        box.paddingProperty().setValue(new Insets(5));
 
 
         nome = new SimpleStringProperty();
         vida = new SimpleStringProperty();
 
-        nome.setValue(personagem.getNome());
+        //nome.setValue(personagem.getNome() + " cod:" + personagem.hashCode());
+        nome.setValue(personagem.getNome() );
         vida.setValue("Vida: " + personagem.getVida());
 
         Label lblNome = new Label();
@@ -51,7 +57,7 @@ public class PainelPersonagemNaArena {
         pnl.getChildren().add(lblNome);
         pnl.getChildren().add(lblVida);
 
-        Button btnAtacar = new Button("Atacar");
+
         btnAtacar.fontProperty().set(Font.font("Verdana", 8));
         pnl.getChildren().add(btnAtacar);
 
@@ -62,7 +68,6 @@ public class PainelPersonagemNaArena {
 
         });
 
-        Button btnCurar = new Button("Curar");
 
         if (personagem instanceof Protagonista) {
             btnCurar.fontProperty().set(Font.font("Verdana", 8));

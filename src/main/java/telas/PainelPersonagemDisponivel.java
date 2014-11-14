@@ -14,6 +14,8 @@ import modelo.IPersonagem;
 
 public class PainelPersonagemDisponivel {
 
+    private Jogo jogo = Jogo.getInstance();
+
     private VBox box = new VBox();
     private IPersonagem personagem;
 
@@ -26,7 +28,6 @@ public class PainelPersonagemDisponivel {
         this.personagem = personagem;
 
         box.alignmentProperty().setValue(Pos.TOP_CENTER);
-
 
 
         nome = new SimpleStringProperty();
@@ -49,8 +50,7 @@ public class PainelPersonagemDisponivel {
 
 
         TilePane pnl = new TilePane();
-        //#FFFAFA
-        //pnl.styleProperty().setValue("-fx-background-color: #8fbc8f;");
+
         pnl.styleProperty().setValue("-fx-background-color: #FFFAFA;");
 
         pnl.getChildren().add(lblNome);
@@ -59,12 +59,7 @@ public class PainelPersonagemDisponivel {
         box.getChildren().add(pnl);
 
         btnAdicionar.setOnAction(action -> {
-
-
-            Jogo jogo = Jogo.getInstance();
             jogo.addNovoPersonagemNaEquipe(personagem);
-
-
         });
 
     }

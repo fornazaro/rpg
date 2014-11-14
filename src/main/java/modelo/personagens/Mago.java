@@ -62,6 +62,11 @@ public class Mago extends Protagonista implements IPersonagem {
 
     }
 
+    @Override
+    public void atualizaSituacaoJogo(RPGEvent event) {
+
+    }
+
 
     @Override
     public Mago clone() throws CloneNotSupportedException {
@@ -89,6 +94,13 @@ public class Mago extends Protagonista implements IPersonagem {
 
         return nova;
     }
+
+    @Override
+    public void sofreAtaque(RPGEvent event) {
+        super.sofreAtaque(event);
+        this.jogo.getEventSource().removeListener(this);
+    }
+
 
 
 }

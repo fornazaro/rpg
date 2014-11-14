@@ -60,6 +60,11 @@ public class Cavaleiro extends Protagonista implements IPersonagem {
 
     }
 
+    @Override
+    public void atualizaSituacaoJogo(RPGEvent event) {
+
+    }
+
 
     @Override
     public Cavaleiro clone() throws CloneNotSupportedException {
@@ -87,6 +92,14 @@ public class Cavaleiro extends Protagonista implements IPersonagem {
 
         return nova;
     }
+
+    @Override
+    public void sofreAtaque(RPGEvent event) {
+        super.sofreAtaque(event);
+        this.jogo.getEventSource().removeListener(this);
+    }
+
+
 
 
 }

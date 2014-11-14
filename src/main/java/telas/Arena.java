@@ -14,6 +14,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import modelo.IPersonagem;
+import modelo.Placar;
 
 
 public class Arena extends Application implements RPGEventListener {
@@ -25,8 +27,9 @@ public class Arena extends Application implements RPGEventListener {
 
     private VBox getRightNode() {
         VBox vBox = new VBox();
+        vBox.paddingProperty().setValue(new Insets(5));
         vBox.fillWidthProperty().setValue(true);
-        vBox.getChildren().add(new Label("Equipe Adversária (máquina)"));
+        vBox.getChildren().add(new Label("Equipe MÁQUINA"));
         vBox.fillWidthProperty().setValue(true);
         vBox.prefHeightProperty().setValue(780);
         return vBox;
@@ -34,6 +37,7 @@ public class Arena extends Application implements RPGEventListener {
 
     private StackPane getCenterNode() {
         StackPane pane = new StackPane();
+        pane.paddingProperty().setValue(new Insets(5));
 
         return pane;
     }
@@ -41,8 +45,9 @@ public class Arena extends Application implements RPGEventListener {
     private VBox getLeftNode() {
 
         VBox vBox = new VBox();
+        vBox.paddingProperty().setValue(new Insets(5));
         vBox.fillWidthProperty().setValue(true);
-        vBox.getChildren().add(new Label("Equipe do Jogador"));
+        vBox.getChildren().add(new Label("Equipe HUMANOS"));
         vBox.fillWidthProperty().setValue(true);
         vBox.prefHeightProperty().setValue(780);
 
@@ -85,7 +90,7 @@ public class Arena extends Application implements RPGEventListener {
     private void exibePersonagensEquipeAdversaria() {
         VBox boxAdversarios = getRightNode();
 
-        jogo.getEquipeAdversaria().stream().forEach(personagem -> {
+        jogo.getEquipeMaquinas().stream().forEach(personagem -> {
             PainelPersonagemAdversarioNaArena p = new PainelPersonagemAdversarioNaArena(personagem);
 
             p.getScreen().maxWidthProperty().setValue(100);
@@ -155,6 +160,14 @@ public class Arena extends Application implements RPGEventListener {
 
     @Override
     public void selecionarAlvo(RPGEvent event) {
+
+        IPersonagem alvo = (IPersonagem) event.getSource();
+
+        jogo.getEventSource().removeListener(alvo);
+        jogo.getEventSource().removeListener(jogo.getAtaque().getAtacante());
+
+        jogo.getEventSource().addListener(alvo);
+
         System.out.println(" executando a seleção e, exibição de alvos");
 
         StackPane boxArena = getCenterNode();
@@ -173,10 +186,10 @@ public class Arena extends Application implements RPGEventListener {
 
         box.getChildren().add(pAtacante.getScreen());
 
-        box.getChildren().add(new Label(jogo.getAtaque().getAtacante().getNome() + " X " + jogo.getAtaque().getAlvo().getNome()));
+        box.getChildren().add(new Label(jogo.getAtaque().getAtacante().getNome() + " X " + alvo.getNome()));
 
 
-        PainelPersonagemNaEquipe pAlvo = new PainelPersonagemNaEquipe((modelo.IPersonagem) event.getSource());
+        PainelPersonagemNaEquipe pAlvo = new PainelPersonagemNaEquipe(alvo);
 
         pAlvo.getScreen().setPrefSize(200, 200);
         pAlvo.getScreen().setMaxSize(200, 200);
@@ -185,9 +198,6 @@ public class Arena extends Application implements RPGEventListener {
 
         Button btnContinuar = new Button("Continua");
         btnContinuar.setOnAction(action -> {
-
-            jogo.getEventSource().addListener(jogo.getAtaque().getAlvo());
-
 
             jogo.getEventSource().disparaExecucaoAtaque(jogo);
 
@@ -217,14 +227,6 @@ public class Arena extends Application implements RPGEventListener {
     @Override
     public void sofreAtaque(RPGEvent event) {
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                exibePersonagensEquipeAdversaria();
-                exibePersonagensEquipeJogador();
-            }
-        });
-
 
         /**
          * iniciando contra-ataque, ou seja após sofrer um ataque, o sistema deve revidar, ou seja disparar um outro ataque
@@ -249,22 +251,27 @@ public class Arena extends Application implements RPGEventListener {
 
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        lblMsg.textProperty().setValue("Processando contra - ataque!!!");
 
         jogo.selecionarAtacanteParaContraAtaque();
-        jogo.iniciarAtaque(jogo.getAtaque().getAtacante());
+        //     jogo.iniciarAtaque(jogo.getAtaque().getAtacante());
         jogo.selecionaAlvoContraAtaque();
         jogo.getEventSource().disparaSelecaoDeAlvoContaAtaque(jogo.getAtaque().getAlvo());
 
     }
 
     @Override
-    public void selecionarAlvoContraAtaque(RPGEvent event) {
+    public void selecionarAlvoContraAtaque(final RPGEvent event) {
+
+        final IPersonagem alvo = (IPersonagem) event.getSource();
+
+        jogo.getEventSource().removeListener(alvo);
+        jogo.getEventSource().removeListener(jogo.getAtaque().getAtacante());
+
 
         System.out.println(" executando a seleção e, exibição de alvos para Contra-ataque");
 
@@ -283,10 +290,11 @@ public class Arena extends Application implements RPGEventListener {
         pAtacante.getScreen().setMaxSize(200, 200);
 
         box.getChildren().add(pAtacante.getScreen());
-        box.getChildren().add(new Label(jogo.getAtaque().getAtacante().getNome() + " X " + jogo.getAtaque().getAlvo().getNome()));
+        box.getChildren().add(new Label(jogo.getAtaque().getAtacante().getNome() + " X " + alvo.getNome()));
 
 
-        PainelPersonagemNaEquipe pAlvo = new PainelPersonagemNaEquipe((modelo.IPersonagem) event.getSource());
+        PainelPersonagemNaEquipe pAlvo = new PainelPersonagemNaEquipe(alvo);
+        // PainelPersonagemNaEquipe pAlvo = new PainelPersonagemNaEquipe((jogo.getAtaque().getAlvo()));
 
         pAlvo.getScreen().setPrefSize(200, 200);
         pAlvo.getScreen().setMaxSize(200, 200);
@@ -296,10 +304,36 @@ public class Arena extends Application implements RPGEventListener {
         Button btnContinuar = new Button("Continua");
         btnContinuar.setOnAction(action -> {
 
-            jogo.getEventSource().addListener(jogo.getAtaque().getAlvo());
-
-
+            jogo.getEventSource().addListener(alvo);
             jogo.getEventSource().disparaExecucaoAtaque(jogo);
+
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+
+                    StackPane ba = getCenterNode();
+
+                    ba.alignmentProperty().setValue(Pos.TOP_CENTER);
+
+                    VBox b = new VBox();
+                    b.alignmentProperty().setValue(Pos.CENTER);
+
+                    Label lblMsg = new Label("Sua vez equipe HUMANO!!!");
+
+                    b.getChildren().add(lblMsg);
+
+
+                    ba.getChildren().add(b);
+
+                    pane.setCenter(ba);
+
+                    exibePersonagensEquipeAdversaria();
+                    exibePersonagensEquipeJogador();
+
+
+                }
+            });
+
 
         });
 
@@ -308,6 +342,58 @@ public class Arena extends Application implements RPGEventListener {
         boxArena.getChildren().add(box);
 
         pane.setCenter(boxArena);
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                exibePersonagensEquipeAdversaria();
+                exibePersonagensEquipeJogador();
+
+
+            }
+        });
+
+
+    }
+
+    @Override
+    public void atualizaSituacaoJogo(RPGEvent event) {
+
+        System.out.println(" personagem morto, atualizando a situação do jogo:");
+
+        Placar placar = jogo.analizaSituacaoJogo();
+
+        System.out.println(" personagem morto, atualizando a situação do jogo:" + placar);
+
+        if (placar.getJogoFinalizado()) {
+
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+
+                    StackPane ba = getCenterNode();
+
+                    ba.alignmentProperty().setValue(Pos.TOP_CENTER);
+
+                    VBox b = new VBox();
+                    b.alignmentProperty().setValue(Pos.CENTER);
+
+                    Label lblMsg = new Label("Parabéns equipe: " + placar.getVencedor());
+
+                    b.getChildren().add(lblMsg);
+
+
+                    ba.getChildren().add(b);
+
+                    pane.setCenter(ba);
+
+                    exibePersonagensEquipeAdversaria();
+                    exibePersonagensEquipeJogador();
+
+
+                }
+            });
+        }
 
     }
 

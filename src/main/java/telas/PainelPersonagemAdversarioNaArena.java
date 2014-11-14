@@ -22,6 +22,9 @@ public class PainelPersonagemAdversarioNaArena extends PainelPersonagemNaArena {
             });
 
             pnl.getChildren().add(btnSelecionarAlvo);
+            pnl.getChildren().remove(btnAtacar);
+            pnl.getChildren().remove(btnCurar);
+
 
         }
     }

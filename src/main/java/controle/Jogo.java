@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import modelo.IPersonagem;
+import modelo.Placar;
 import modelo.StatusPersonagem;
 import modelo.personagens.Bruxa;
 import modelo.personagens.Cavaleiro;
@@ -29,7 +30,7 @@ public class Jogo {
 
     private List<IPersonagem> personagems = new ArrayList<IPersonagem>();
 
-    private List<IPersonagem> equipeAdversaria = new ArrayList<IPersonagem>();
+    private List<IPersonagem> equipeMaquinas = new ArrayList<IPersonagem>();
 
     private Ataque ataque;
 
@@ -58,10 +59,10 @@ public class Jogo {
 
         System.out.println(" Monte sua equipe, exibindo os personagens disponíveis");
 
-        personagems.add(new Bruxa());
-        personagems.add(new Guerreiro());
         personagems.add(new Mago());
         personagems.add(new Cavaleiro());
+        personagems.add(new Bruxa());
+        personagems.add(new Guerreiro());
 
 
     }
@@ -72,7 +73,29 @@ public class Jogo {
 
     public void addNovoPersonagemNaEquipe(IPersonagem personagem) {
 
-        equipeJogador.add(personagem);
+
+        try {
+            if (!equipeJogador.contains(personagem)) {
+
+                equipeJogador.add(personagem);
+            } else {
+
+                if (personagem instanceof Mago) {
+                    equipeJogador.add(((Mago) personagem).clone());
+                } else if (personagem instanceof Cavaleiro) {
+                    equipeJogador.add(((Cavaleiro) personagem).clone());
+                } else if (personagem instanceof Bruxa) {
+                    equipeJogador.add(((Bruxa) personagem).clone());
+                } else if (personagem instanceof Guerreiro) {
+                    equipeJogador.add(((Guerreiro) personagem).clone());
+
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
 
     }
 
@@ -92,9 +115,9 @@ public class Jogo {
     public void buildEquipeAdversaria() {
         List<IPersonagem> listaOrigem = this.equipeJogador;
 
-        this.equipeAdversaria = null;
+        this.equipeMaquinas = null;
 
-        this.equipeAdversaria = new ArrayList<>();
+        this.equipeMaquinas = new ArrayList<>();
 
         listaOrigem.forEach(obj -> {
 
@@ -103,7 +126,7 @@ public class Jogo {
 
                 try {
                     Bruxa nova = bruxa.clone();
-                    this.equipeAdversaria.add(nova);
+                    this.equipeMaquinas.add(nova);
 
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
@@ -114,7 +137,7 @@ public class Jogo {
 
                 try {
                     Cavaleiro nova = cavaleiro.clone();
-                    this.equipeAdversaria.add(nova);
+                    this.equipeMaquinas.add(nova);
 
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
@@ -126,7 +149,7 @@ public class Jogo {
 
                 try {
                     Guerreiro nova = guerreiro.clone();
-                    this.equipeAdversaria.add(nova);
+                    this.equipeMaquinas.add(nova);
 
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
@@ -138,7 +161,7 @@ public class Jogo {
 
                 try {
                     Mago nova = mago.clone();
-                    this.equipeAdversaria.add(nova);
+                    this.equipeMaquinas.add(nova);
 
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
@@ -165,8 +188,8 @@ public class Jogo {
 
     }
 
-    public List<IPersonagem> getEquipeAdversaria() {
-        return equipeAdversaria;
+    public List<IPersonagem> getEquipeMaquinas() {
+        return equipeMaquinas;
     }
 
     public void selecionarAlvoAtaque(IPersonagem alvo) {
@@ -193,7 +216,7 @@ public class Jogo {
     public void selecionarAtacanteParaContraAtaque() {
 
 
-        this.equipeAdversaria.stream().forEach(new Consumer<IPersonagem>() {
+        this.equipeMaquinas.stream().forEach(new Consumer<IPersonagem>() {
             @Override
             public void accept(IPersonagem personagem) {
                 if (personagem.statusPersonagemProperty().getValue().equals(StatusPersonagem.VIVO)) {
@@ -223,5 +246,54 @@ public class Jogo {
         });
 
 
+    }
+
+    public Placar analizaSituacaoJogo() {
+
+        Placar placar = new Placar();
+
+        //existem personagens vivos na equipe do jogador
+
+        Integer humanosVivos = 0;
+
+        for (IPersonagem humano : this.equipeJogador) {
+            if (humano.statusPersonagemProperty().getValue().equals(StatusPersonagem.VIVO)) {
+                humanosVivos++;
+            }
+        }
+
+        placar.setSobreviventesHumanos(humanosVivos.toString());
+
+        //existem personagens vivos na equipe do MAQUINA
+
+        Integer maquinasVivas = 0;
+
+        for (IPersonagem humano : this.equipeMaquinas) {
+            if (humano.statusPersonagemProperty().getValue().equals(StatusPersonagem.VIVO)) {
+                maquinasVivas++;
+            }
+        }
+
+        placar.setSobreviventesMaquinas(maquinasVivas.toString());
+
+        if (humanosVivos.equals(0) || maquinasVivas.equals(0)) {
+            placar.setJogoFinalizado(true);
+        } else {
+            placar.setJogoFinalizado(false);
+        }
+
+        if (placar.getJogoFinalizado()) {
+            if (humanosVivos > maquinasVivas) {
+                placar.setVencedor("HUMANOS VENCERAM A PARTIDA!!!");
+                placar.setPerdedor("MÁQUINAS PERDERAM A PARTIDA!!!");
+            } else {
+                placar.setVencedor("MAQUINAS VENCERAM A PARTIDA!!!");
+                placar.setPerdedor("HUMANOS PERDERAM A PARTIDA!!!");
+
+            }
+        }
+
+
+        return placar;
     }
 }
