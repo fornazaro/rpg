@@ -5,6 +5,7 @@
 /home/ton/IdeaProjects/rpg/src/main/java/modelo/IPersonagem.java
 /home/ton/IdeaProjects/rpg/src/main/java/modelo/personagens/Cavaleiro.java
 /home/ton/IdeaProjects/rpg/src/main/java/telas/PainelPersonagemDisponivel.java
+/home/ton/IdeaProjects/rpg/src/main/java/controle/Acao.java
 /home/ton/IdeaProjects/rpg/src/main/java/eventos/RPGEventSource.java
 /home/ton/IdeaProjects/rpg/src/main/java/modelo/StatusPersonagem.java
 /home/ton/IdeaProjects/rpg/src/main/java/telas/Inicial.java
@@ -17,6 +18,6 @@
 /home/ton/IdeaProjects/rpg/src/main/java/eventos/RPGEventListener.java
 /home/ton/IdeaProjects/rpg/src/main/java/modelo/Antagonista.java
 /home/ton/IdeaProjects/rpg/src/main/java/eventos/RPGEvent.java
-/home/ton/IdeaProjects/rpg/src/main/java/controle/Ataque.java
 /home/ton/IdeaProjects/rpg/src/main/java/telas/PainelPersonagemNaArena.java
+/home/ton/IdeaProjects/rpg/src/main/java/telas/PainelPersonagemNaArenaParaCura.java
 /home/ton/IdeaProjects/rpg/src/main/java/telas/Arena.java

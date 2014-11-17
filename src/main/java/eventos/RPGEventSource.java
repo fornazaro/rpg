@@ -1,8 +1,5 @@
 package eventos;
 
-import modelo.IPersonagem;
-import modelo.Personagem;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -41,10 +38,34 @@ public class RPGEventSource {
         }
     }
 
+    public void disparaExecucaoCura(Object source) {
+        RPGEvent event = new RPGEvent(source);
+        for (RPGEventListener listener : cloneListeners()) {
+            listener.incrementaVida(event);
+        }
+
+    }
+
+    public void disparaInicioCura(Object source) {
+
+        RPGEvent event = new RPGEvent(source);
+        for (RPGEventListener listener : cloneListeners()) {
+            listener.iniciaCuraListener(event);
+        }
+
+    }
+
     public void disparaSofrimentoAtaque(Object source) {
         RPGEvent event = new RPGEvent(source);
         for (RPGEventListener listener : cloneListeners()) {
             listener.sofreAtaque(event);
+        }
+    }
+
+    public void disparaSelecaoDeAlvoCura(Object source) {
+        RPGEvent event = new RPGEvent(source);
+        for (RPGEventListener listener : cloneListeners()) {
+            listener.selecionarAlvoCura(event);
         }
     }
 

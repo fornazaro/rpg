@@ -72,7 +72,7 @@ public class PainelPersonagemNaArena {
         if (personagem instanceof Protagonista) {
             btnCurar.fontProperty().set(Font.font("Verdana", 8));
             btnCurar.setOnAction(action -> {
-                jogo.curar();
+                jogo.iniciaCura(personagem);
 
             });
 

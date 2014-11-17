@@ -12,9 +12,9 @@ public interface IPersonagem extends RPGEventListener, Cloneable {
 
     public String getDescricao();
 
-    public int getVida();
+    public double getVida();
 
-    public int getDano();
+    public double getDano();
 
     public SimpleObjectProperty<StatusPersonagem> statusPersonagemProperty();
 

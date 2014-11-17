@@ -15,7 +15,7 @@ import java.util.List;
 
 public class RPG extends Application {
 
-    //private String url = getClass().getResourceAsStream("mago.jpg").toString();
+
 
 
     @Override
@@ -49,6 +49,9 @@ public class RPG extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("RPG");
         primaryStage.show();
+
+
+
 
     }
 }

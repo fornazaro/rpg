@@ -3,20 +3,30 @@ package modelo;
 
 public class Protagonista extends Personagem {
 
-    private int fatorIncremento;
+    protected double fatorIncremento;
 
 
-    public void calcularFatorIncremento() {
+    protected void calcularFatorIncremento() {
+
+
+        fatorIncremento = this.vida / 2;
+
+        System.out.println("calculando fator de incremento, para 50% da vida que o protagonista tiver");
+
+        System.out.println(" vida: " + this.vida + " fatorIncremento: " + this.fatorIncremento);
+
 
     }
 
 
-    public void incrementarVida(Personagem personagem, int fatorIncremento) {
-
-    }
 
     @Override
     public String atacar(Personagem atacado) {
         return super.atacar(atacado);
     }
+
+    public double getFatorIncremento() {
+        return fatorIncremento;
+    }
+
 }

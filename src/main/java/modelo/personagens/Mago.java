@@ -1,6 +1,7 @@
 package modelo.personagens;
 
 
+import controle.Jogo;
 import eventos.RPGEvent;
 import javafx.beans.property.SimpleObjectProperty;
 import modelo.IPersonagem;
@@ -23,12 +24,12 @@ public class Mago extends Protagonista implements IPersonagem {
 
 
     @Override
-    public int getDano() {
+    public double getDano() {
         return this.dano;
     }
 
     @Override
-    public int getResistencia() {
+    public double getResistencia() {
         return this.resistencia;
     }
 
@@ -67,6 +68,13 @@ public class Mago extends Protagonista implements IPersonagem {
 
     }
 
+    @Override
+    public void iniciaCuraListener(RPGEvent event) {
+        System.out.println("iniciando cura");
+        calcularFatorIncremento();
+
+    }
+
 
     @Override
     public Mago clone() throws CloneNotSupportedException {
@@ -100,6 +108,39 @@ public class Mago extends Protagonista implements IPersonagem {
         super.sofreAtaque(event);
         this.jogo.getEventSource().removeListener(this);
     }
+
+    public void incrementaVida(RPGEvent event) {
+
+
+        System.out.println("executando cura no Personagem MAGO com vida: " + this.vida);
+
+        Jogo curador = (Jogo) event.getSource();
+
+        if (jogo.getAtaque().getAtacante() instanceof Protagonista) {
+            Protagonista p = (Protagonista) jogo.getAtaque().getAtacante();
+
+            this.vida = (this.vida + p.getFatorIncremento());
+
+        }
+
+    System.out.println("incrementada para: " + this.vida) ;
+
+
+    }
+
+    @Override
+    protected void calcularFatorIncremento() {
+
+
+        fatorIncremento = this.vida / 2;
+
+        System.out.println("calculando fator de incremento, para 50% da vida que o protagonista tiver");
+
+        System.out.println(" vida: " + this.vida + " fatorIncremento: " + this.fatorIncremento);
+
+
+    }
+
 
 
 
