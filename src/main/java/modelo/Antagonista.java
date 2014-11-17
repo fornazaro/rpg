@@ -1,5 +1,10 @@
 package modelo;
 
+import eventos.RPGEventListener;
+
+/**
+ * O Antagonista deve ter o poder de ataque dobrado
+ */
 public class Antagonista extends Personagem {
 
     @Override
