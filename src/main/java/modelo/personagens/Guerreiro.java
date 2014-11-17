@@ -1,9 +1,11 @@
 package modelo.personagens;
 
+import controle.Jogo;
 import eventos.RPGEvent;
 import javafx.beans.property.SimpleObjectProperty;
 import modelo.Antagonista;
 import modelo.IPersonagem;
+import modelo.Protagonista;
 import modelo.StatusPersonagem;
 
 
@@ -19,12 +21,12 @@ public class Guerreiro extends Antagonista implements IPersonagem {
     }
 
     @Override
-    public int getDano() {
+    public double getDano() {
         return this.dano;
     }
 
     @Override
-    public int getResistencia() {
+    public double getResistencia() {
         return this.resistencia;
     }
 
@@ -63,6 +65,11 @@ public class Guerreiro extends Antagonista implements IPersonagem {
 
     }
 
+    @Override
+    public void iniciaCuraListener(RPGEvent event) {
+
+    }
+
 
     @Override
     public Guerreiro clone() throws CloneNotSupportedException {
@@ -98,7 +105,21 @@ public class Guerreiro extends Antagonista implements IPersonagem {
         this.jogo.getEventSource().removeListener(this);
     }
 
+    public void incrementaVida(RPGEvent event) {
 
+        System.out.println("executando cura no Personagem Guerreiro");
+
+        Jogo curador = (Jogo) event.getSource();
+
+        if (jogo.getAtaque().getAtacante() instanceof Protagonista) {
+            Protagonista p = (Protagonista) jogo.getAtaque().getAtacante();
+
+            this.vida = (this.vida + p.getFatorIncremento());
+
+        }
+
+
+    }
 
 
 }

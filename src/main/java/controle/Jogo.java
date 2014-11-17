@@ -18,7 +18,8 @@ import java.util.function.Consumer;
 
 /**
  * Jogo RPG
- * *
+ * <p/>
+ * Padrão singleton
  */
 public class Jogo {
 
@@ -32,7 +33,7 @@ public class Jogo {
 
     private List<IPersonagem> equipeMaquinas = new ArrayList<IPersonagem>();
 
-    private Ataque ataque;
+    private Acao ataque;
 
     private RPGEventSource eventSource = new RPGEventSource();
 
@@ -176,15 +177,23 @@ public class Jogo {
 
     public void iniciarAtaque(IPersonagem p) {
         this.ataque = null;
-        this.ataque = new Ataque();
-        this.ataque.iniciarAtaque(p);
+        this.ataque = new Acao();
+        this.ataque.iniciarAcao(p);
 
         eventSource.disparaInicioAtaque(p);
 
 
     }
 
-    public void curar() {
+    public void iniciaCura(IPersonagem p) {
+        this.ataque = null;
+        this.ataque = new Acao();
+        //selecionando o personagem que vai disparar a cura
+        this.ataque.iniciarAcao(p);
+
+        eventSource.addListener(p);
+        eventSource.disparaInicioCura(p);
+
 
     }
 
@@ -204,7 +213,7 @@ public class Jogo {
         return eventSource;
     }
 
-    public Ataque getAtaque() {
+    public Acao getAtaque() {
         return ataque;
     }
 
@@ -295,5 +304,12 @@ public class Jogo {
 
 
         return placar;
+    }
+
+    public void selecionarAlvoCura(IPersonagem alvo) {
+        System.out.println(" selecionando alvo cura no jogo");
+        this.ataque.selecionaAlvo(alvo);
+
+        eventSource.disparaSelecaoDeAlvoCura(alvo);
     }
 }

@@ -1,8 +1,8 @@
 package modelo.personagens;
 
+import controle.Jogo;
 import eventos.RPGEvent;
 import javafx.beans.property.SimpleObjectProperty;
-import modelo.Antagonista;
 import modelo.IPersonagem;
 import modelo.Protagonista;
 import modelo.StatusPersonagem;
@@ -20,12 +20,12 @@ public class Cavaleiro extends Protagonista implements IPersonagem {
     }
 
     @Override
-    public int getDano() {
+    public double getDano() {
         return this.dano;
     }
 
     @Override
-    public int getResistencia() {
+    public double getResistencia() {
         return this.resistencia;
     }
 
@@ -37,32 +37,6 @@ public class Cavaleiro extends Protagonista implements IPersonagem {
     @Override
     public String getNome() {
         return this.nome;
-    }
-
-
-    @Override
-    public void iniciaAtaqueListener(RPGEvent e) {
-
-    }
-
-    @Override
-    public void selecionarAlvo(RPGEvent event) {
-
-    }
-
-    @Override
-    public void executaAtaque(RPGEvent event) {
-
-    }
-
-    @Override
-    public void selecionarAlvoContraAtaque(RPGEvent event) {
-
-    }
-
-    @Override
-    public void atualizaSituacaoJogo(RPGEvent event) {
-
     }
 
 
@@ -99,7 +73,69 @@ public class Cavaleiro extends Protagonista implements IPersonagem {
         this.jogo.getEventSource().removeListener(this);
     }
 
+    @Override
+    public void iniciaCuraListener(RPGEvent event) {
+        System.out.println("iniciando cura");
+        calcularFatorIncremento();
 
+    }
+
+    @Override
+    public void iniciaAtaqueListener(RPGEvent e) {
+
+    }
+
+    @Override
+    public void selecionarAlvo(RPGEvent event) {
+
+    }
+
+    @Override
+    public void executaAtaque(RPGEvent event) {
+
+    }
+
+    @Override
+    public void selecionarAlvoContraAtaque(RPGEvent event) {
+
+    }
+
+    @Override
+    public void atualizaSituacaoJogo(RPGEvent event) {
+
+    }
+
+    public void incrementaVida(RPGEvent event) {
+
+
+        System.out.println("executando cura no Personagem MAGO com vida: " + this.vida);
+
+        Jogo curador = (Jogo) event.getSource();
+
+        if (jogo.getAtaque().getAtacante() instanceof Protagonista) {
+            Protagonista p = (Protagonista) jogo.getAtaque().getAtacante();
+
+            this.vida = (this.vida + p.getFatorIncremento());
+
+        }
+
+        System.out.println("incrementada para: " + this.vida);
+
+
+    }
+
+    @Override
+    protected void calcularFatorIncremento() {
+
+
+        fatorIncremento = this.vida / 4;
+
+        System.out.println("calculando fator de incremento, para 50% da vida que o protagonista tiver");
+
+        System.out.println(" vida: " + this.vida + " fatorIncremento: " + this.fatorIncremento);
+
+
+    }
 
 
 }

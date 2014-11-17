@@ -62,6 +62,8 @@ public class PainelPersonagemDisponivel {
             jogo.addNovoPersonagemNaEquipe(personagem);
         });
 
+
+
     }
 
     public VBox getScreen() {

@@ -230,7 +230,7 @@ public class Arena extends Application implements RPGEventListener {
 
         /**
          * iniciando contra-ataque, ou seja após sofrer um ataque, o sistema deve revidar, ou seja disparar um outro ataque
-         * É preciso, selecionar um personagem da lista de personagens da equipe da máquina, e depois selecionar uma ação(atacar ou curar )
+         * É preciso, selecionar um personagem da lista de personagens da equipe da máquina, e depois selecionar uma ação(atacar ou iniciaCura )
          * e depois selecionar um alvo, que deve ser da equipe do jogardor humano. e então disparar um ataque.
          */
         StackPane boxArena = getCenterNode();
@@ -258,7 +258,7 @@ public class Arena extends Application implements RPGEventListener {
 
 
         jogo.selecionarAtacanteParaContraAtaque();
-        //     jogo.iniciarAtaque(jogo.getAtaque().getAtacante());
+        //     jogo.iniciarAcao(jogo.getAtaque().getAtacante());
         jogo.selecionaAlvoContraAtaque();
         jogo.getEventSource().disparaSelecaoDeAlvoContaAtaque(jogo.getAtaque().getAlvo());
 
@@ -395,6 +395,125 @@ public class Arena extends Application implements RPGEventListener {
             });
         }
 
+    }
+
+    @Override
+    public void selecionarAlvoCura(RPGEvent event) {
+        System.out.println("executando selecionarAlvoCura na arena");
+
+
+        IPersonagem alvo = (IPersonagem) event.getSource();
+
+        jogo.getEventSource().removeListener(alvo);
+        jogo.getEventSource().removeListener(jogo.getAtaque().getAtacante());
+
+        jogo.getEventSource().addListener(alvo);
+
+        System.out.println(" executando a seleção e, exibição de alvo para curar");
+
+        StackPane boxArena = getCenterNode();
+
+        boxArena.alignmentProperty().setValue(Pos.TOP_CENTER);
+
+        VBox box = new VBox();
+        box.alignmentProperty().setValue(Pos.TOP_CENTER);
+        box.getChildren().add(new Label("EQUIPE RESTAURANDO VIDA!!!"));
+
+
+        PainelPersonagemNaEquipe pAtacante = new PainelPersonagemNaEquipe(jogo.getAtaque().getAtacante());
+
+        pAtacante.getScreen().setPrefSize(200, 200);
+        pAtacante.getScreen().setMaxSize(200, 200);
+
+        box.getChildren().add(pAtacante.getScreen());
+
+        box.getChildren().add(new Label(jogo.getAtaque().getAtacante().getNome() + " X " + alvo.getNome()));
+
+
+        PainelPersonagemNaEquipe pAlvo = new PainelPersonagemNaEquipe(alvo);
+
+        pAlvo.getScreen().setPrefSize(200, 200);
+        pAlvo.getScreen().setMaxSize(200, 200);
+
+        box.getChildren().add(pAlvo.getScreen());
+
+        Button btnContinuar = new Button("Continua com cura");
+        btnContinuar.setOnAction(action -> {
+
+            jogo.getEventSource().disparaExecucaoCura(jogo);
+
+        });
+
+        box.getChildren().add(btnContinuar);
+
+        boxArena.getChildren().add(box);
+
+        pane.setCenter(boxArena);
+    }
+
+
+    @Override
+    public void iniciaCuraListener(RPGEvent event) {
+        System.out.println(" executando inicia cura na arena");
+        exibePersonagensEquipeJogadorCura();
+    }
+
+    private void exibePersonagensEquipeJogadorCura() {
+        VBox box = getLeftNode();
+
+        jogo.getEquipeJogador().stream().forEach(personagem -> {
+            PainelPersonagemNaArenaParaCura p = new PainelPersonagemNaArenaParaCura(personagem);
+
+            p.getScreen().maxWidthProperty().setValue(100);
+            p.getScreen().maxHeightProperty().setValue(100);
+
+            p.getScreen().prefWidthProperty().setValue(100);
+            p.getScreen().prefHeightProperty().setValue(100);
+
+            p.getScreen().paddingProperty().setValue(new Insets(5));
+
+            box.getChildren().add(p.getScreen());
+
+
+        });
+
+        pane.setLeft(box);
+        pane.setRight(null);
+        pane.setCenter(null);
+
+    }
+
+    @Override
+    public void incrementaVida(RPGEvent event) {
+        System.out.println(" executando incrementaVida na arena");
+        //voltando ao estado do jogo.
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+
+                StackPane ba = getCenterNode();
+
+                ba.alignmentProperty().setValue(Pos.TOP_CENTER);
+
+                VBox b = new VBox();
+                b.alignmentProperty().setValue(Pos.CENTER);
+
+                Label lblMsg = new Label("Sua vez equipe HUMANO!!!");
+
+                b.getChildren().add(lblMsg);
+
+
+                ba.getChildren().add(b);
+
+                pane.setCenter(ba);
+
+                exibePersonagensEquipeAdversaria();
+                exibePersonagensEquipeJogador();
+
+
+            }
+        });
     }
 
 

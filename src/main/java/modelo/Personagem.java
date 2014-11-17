@@ -11,11 +11,11 @@ public class Personagem {
     protected Jogo jogo = Jogo.getInstance();
 
     protected String nome;
-    protected int dano;
-    protected int resistencia;
+    protected double dano;
+    protected double resistencia;
     protected String urlImagem = null;
     protected String descricao;
-    protected int vida = 40;
+    protected double vida = 40;
 
 
     protected SimpleObjectProperty<StatusPersonagem> statusPersonagemProperty;
@@ -26,11 +26,11 @@ public class Personagem {
 
     }
 
-    public int getDano() {
+    public double getDano() {
         return this.dano;
     }
 
-    public int getResistencia() {
+    public double getResistencia() {
         return this.resistencia;
     }
 
@@ -38,7 +38,7 @@ public class Personagem {
         return null;
     }
 
-    public void reagir(int reducao) {
+    public void reagir(double reducao) {
 
     }
 
@@ -47,7 +47,7 @@ public class Personagem {
         return descricao;
     }
 
-    public int getVida() {
+    public double getVida() {
         return vida;
     }
 
@@ -71,7 +71,6 @@ public class Personagem {
     }
 
     public void sofreAtaque(RPGEvent event) {
-
         IPersonagem atacante = (IPersonagem) event.getSource();
         /**descontar o dano do ataque da vida do personagem,  e depois acrescentando a resistência, caso o atacante seja antagonista, seu poder de ataque é dobrado**/
 
@@ -81,7 +80,7 @@ public class Personagem {
 
 
                 if (!statusPersonagemProperty.get().equals(StatusPersonagem.MORTO)) {
-                    int saldo = 0;
+                    double saldo = 0;
 
                     if (atacante instanceof Antagonista) {
                         saldo = (this.vida - (atacante.getDano() * 2)) + this.resistencia;
@@ -99,15 +98,17 @@ public class Personagem {
                 }
 
 
-
             }
         } else {
             System.out.println(" Atacante morto no momento do ataque");
         }
 
 
+    }
 
 
+    public void selecionarAlvoCura(RPGEvent event) {
+        System.out.println("executando selecionarAlvoCura nos personagens");
     }
 
     @Override
@@ -132,13 +133,18 @@ public class Personagem {
 
     @Override
     public int hashCode() {
-        int result = jogo != null ? jogo.hashCode() : 0;
+        int result;
+        long temp;
+        result = jogo != null ? jogo.hashCode() : 0;
         result = 31 * result + (nome != null ? nome.hashCode() : 0);
-        result = 31 * result + dano;
-        result = 31 * result + resistencia;
+        temp = Double.doubleToLongBits(dano);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(resistencia);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (urlImagem != null ? urlImagem.hashCode() : 0);
         result = 31 * result + (descricao != null ? descricao.hashCode() : 0);
-        result = 31 * result + vida;
+        temp = Double.doubleToLongBits(vida);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (statusPersonagemProperty != null ? statusPersonagemProperty.hashCode() : 0);
         return result;
     }

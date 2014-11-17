@@ -3,14 +3,14 @@ package controle;
 import modelo.IPersonagem;
 
 
-public class Ataque {
+public class Acao {
 
 
     private IPersonagem atacante;
 
     private IPersonagem alvo;
 
-    public void iniciarAtaque(IPersonagem p) {
+    public void iniciarAcao(IPersonagem p) {
         //finalizando ataque
         atacante = null;
         alvo = null;
